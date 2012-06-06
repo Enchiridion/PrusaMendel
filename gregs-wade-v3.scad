@@ -19,8 +19,9 @@ wildseyed_mount=64;
 geared_extruder_nozzle=128; // http://reprap.org/wiki/Geared_extruder_nozzle
 jhead_mount=256;
 geeksbase_mount=512;
+malcolm_extrusion_mount=1024;
 
-default_extruder_mount=jhead_mount;
+default_extruder_mount=malcolm_extrusion_mount;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -33,17 +34,24 @@ default_mounting_holes=mounting_holes_symmetrical;
 wade(hotend_mount=default_extruder_mount,
 	mounting_holes=default_mounting_holes);
 
-translate([-14,39,0])
-bearing_washer();
+////CarriageVisualisation
+//translate([motor_mount_translation[0]-gear_separation,-1,0])
+//translate([-filament_feed_hole_offset,0,wade_block_depth/2])
+//rotate([0,90+22,0])
+//rotate([90,0,0]) %import ("gregs-new-x-carriage.stl");
+
+//translate([-14,39,0])
+//bearing_washer();
 
 //Place for printing
-translate([50,56,15.25]) // This is the translation for the 3mm version.
-//translate([50,56,13.92]) // This is the translation for the 1.75mm version.
-rotate(180)
-rotate([0,-90,0])
 
-//Place for assembly.
-wadeidler(); 
+//translate([50,56,15.25]) // This is the translation for the 3mm version.
+////translate([50,56,13.92]) // This is the translation for the 1.75mm version.
+//rotate(180)
+//rotate([0,-90,0])
+//
+////Place for assembly.
+//wadeidler(); 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -150,7 +158,7 @@ hole_for_608=22.3;
 
 block_top_right=[wade_block_width,wade_block_height];
 
-layer_thickness=0.2;
+layer_thickness=0.35;
 filament_diameter=3;
 filament_feed_hole_d=(filament_diameter*1.1)/cos(180/8);
 hobbing_depth=2;
@@ -330,6 +338,8 @@ module wade(
 				wildseyed_mount_holes(insulator_d=16);
 			if (in_mask (hotend_mount,geeksbase_mount))
 				geeksbase_holes ();
+			if (in_mask (hotend_mount,malcolm_extrusion_mount))
+				malcolm_extrusion_holes ();
 		}
 	}
 }
@@ -846,4 +856,34 @@ module geeksbase_holes ()
 	cylinder(r=m3_diameter/2-0.5,/*tight*/,h=wade_block_depth+2,center=true); 
 
 	//cylinder(r=m4_diameter/2-0.5/* tight */,h=wade_block_depth+2,center=true); 
+}
+
+module malcolm_extrusion_holes () 
+{
+	extruder_recess_d=16;
+	extruder_recess_h=4; 
+	hole_axis_rotation=22; 
+	hole_separation=33.2;
+	hole_slot_height=5;
+	
+	// Recess in base
+	translate([0,0,-1])
+	cylinder(r=extruder_recess_d/2,h=extruder_recess_h+1); 
+	
+	for(mount=[-1,1])
+	rotate([0,0,hole_axis_rotation-90+90*mount])
+	translate([hole_separation/2,0,0])
+	{
+		translate([0,0,-1])
+		cylinder(r=m3_diameter/2,h=base_thickness+2,$fn=8);
+
+		translate([0,0,base_thickness-2])
+		rotate(-hole_axis_rotation+180)
+		{
+			cylinder(r=m3_nut_diameter/2,h=base_thickness/2+hole_slot_height,$fn=6);
+			translate([0,-m3_nut_diameter,hole_slot_height/2+base_thickness/2]) 
+			cube([m3_nut_diameter,m3_nut_diameter*2,hole_slot_height],
+					center=true);
+		}
+	}
 }

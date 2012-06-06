@@ -27,6 +27,8 @@ bushing_support_width=17;
 rod_support_width=10;
 pad_groove_depth=0.7;
 
+nut_trap_slop=0.3;
+
 module xend_side(closed_end=true,curved_sides=false,endstop_mount=false)
 {
 //	translate([25,0,0])
@@ -199,7 +201,7 @@ module xend(endstop_mount=false,closed_end=true,curved_sides=false,override_heig
 
 			//Nut Trap
 			translate([0,-20,0]) 
-			cylinder(h=40,r=m8_nut_diameter/2+thin_wall*corection,$fn=6);
+			cylinder(h=40,r=m8_nut_diameter/2+nut_trap_slop+thin_wall*corection,$fn=6);
 		}
 
 		// Slider cutout. 
@@ -210,12 +212,12 @@ module xend(endstop_mount=false,closed_end=true,curved_sides=false,override_heig
 		difference()
 		{
 			translate([0,-20,39.5]) 
-			cylinder(h=90,r=m8_nut_diameter/2,$fn=6,center=true);
+			cylinder(h=90,r=m8_nut_diameter/2+nut_trap_slop,$fn=6,center=true);
 			translate([0,-20,8.5]) 
-			cylinder(h=4,r=m8_nut_diameter/2+thin_wall,$fn=6,center=true);
+			cylinder(h=4,r=m8_nut_diameter/2+nut_trap_slop+thin_wall,$fn=6,center=true);
 		}
 		translate([0,-20,52]) 
-		cylinder(h=90,r=m8_diameter/2,$fn=9,center=true);
+		cylinder(h=90,r=m8_diameter/2+0.5,$fn=9,center=true);
 	}
 }
 
