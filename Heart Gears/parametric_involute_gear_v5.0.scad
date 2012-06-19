@@ -33,7 +33,7 @@ pi=3.1415926535897932384626433832795;
 // and pressure angle will mesh.
 
 module bevel_gear_pair (
-	gear1_teeth = 41,
+	gear1_teeth = 13,
 	gear2_teeth = 7,
 	axis_angle = 90,
 	outside_circular_pitch=1000)
@@ -172,6 +172,7 @@ module bevel_gear (
 				{
 					rotate ([0,0,i*360/number_of_teeth])
 					{
+						render()
 						involute_bevel_gear_tooth (
 							back_cone_radius = back_cone_radius,
 							root_radius = root_radius,
@@ -401,6 +402,7 @@ module gear_shape (
 		{
 			rotate ([0,0,i*360/number_of_teeth])
 			{
+				render()
 				involute_gear_tooth (
 					pitch_radius = pitch_radius,
 					root_radius = root_radius,

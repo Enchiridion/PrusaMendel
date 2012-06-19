@@ -18,14 +18,9 @@ fan_hole_height=4;
 
 belt_clamp_thickness=2; 
 belt_clamp_width=m3_diameter+3*belt_clamp_thickness+2;
-belt_clamp_hole_separation=10;
+belt_clamp_hole_separation=belt_width+4;
 belt_clamp_height=m3_diameter+2*belt_clamp_thickness;
 belt_clamp_length=belt_clamp_hole_separation+m3_diameter+2*belt_clamp_thickness;
-
-belt_width=6;
-belt_thickness=1.5; 
-tooth_height=1.5;
-tooth_spacing=5;
 
 key_w=4;
 key_l=6;
@@ -106,11 +101,11 @@ module gregs_x_carriage(with_fanmount=true)
 				lm8uu_holder_width/2,lm8uu_holder_width/2,12,12);
 			}
 
-			translate([25+13.5+1,(lm8uu_holder_length*0.7+holder_separation/2)])
+			translate([25+lm8uu_holder_width/2+carriage_belt_spacing+belt_width/2,(lm8uu_holder_length*0.7+holder_separation/2)])
 			belt_clamp_socket (version=1);
 
 			mirror([0,1,0])
-			translate([25+13.5+1,(lm8uu_holder_length*0.7+holder_separation/2)])
+			translate([25+lm8uu_holder_width/2+carriage_belt_spacing+belt_width/2,(lm8uu_holder_length*0.7+holder_separation/2)])
 			belt_clamp_socket (version=0);
 
 			// Thicker bit around the big hole.
@@ -138,11 +133,11 @@ module gregs_x_carriage(with_fanmount=true)
 			}
 		}
 
-		translate([25+13.5+1,(lm8uu_holder_length*0.7+holder_separation/2)])
+		translate([25+lm8uu_holder_width/2+carriage_belt_spacing+belt_width/2,(lm8uu_holder_length*0.7+holder_separation/2)])
 		belt_clamp_holes(1);
 
 		mirror([0,1,0])
-		translate([25+13.5+1,(lm8uu_holder_length*0.7+holder_separation/2)])
+		translate([25+lm8uu_holder_width/2+carriage_belt_spacing+belt_width/2,(lm8uu_holder_length*0.7+holder_separation/2)])
 		belt_clamp_holes(0);
 
 		// The big hole.
@@ -175,6 +170,11 @@ module gregs_x_carriage(with_fanmount=true)
 		translate([38,i*18.4,-1])
 		cube([10,5,15],true);
 	}
+
+	//belt path
+
+	translate([25+lm8uu_holder_width/2+carriage_belt_spacing+belt_width/2,0,-belt_thickness/2])
+	%cube([belt_width,200,belt_thickness],center=true);
 }
 
 module cable_tie_holes ()
@@ -205,8 +205,8 @@ module belt_clamp_socket(version=0)
 		translate([0,0,belt_clamp_height/2])
 		union()
 		{
-			cube([belt_clamp_hole_separation,belt_clamp_width,belt_clamp_height],
-				center=true);
+			translate([-(2.5+carriage_belt_spacing+belt_width/2),-belt_clamp_width/2,-belt_clamp_height/2])
+			cube([2.5+carriage_belt_spacing+belt_width/2+belt_clamp_hole_separation/2,belt_clamp_width,belt_clamp_height]);
 			for(i=[-1,1])
 			translate([belt_clamp_hole_separation/2,0,0])
 			cylinder(r=belt_clamp_width/2,h=belt_clamp_height,center=true);
@@ -275,7 +275,7 @@ module belt_clamp_holes(version)
 			translate([0,0,belt_clamp_width/2])
 			cylinder(r=m3_nut_diameter/2,h=3.4,center=true,$fn=6);
 
-			for(i=[-1:1])
+			for(i=[-3:3])
 			translate([-belt_width/2,-tooth_spacing/4+i*tooth_spacing,
 				belt_clamp_height-tooth_height-belt_clamp_height/2])
 			cube([belt_width,tooth_spacing/2,tooth_height+1]);	
@@ -299,7 +299,7 @@ module belt_clamp(version)
 		translate([0,0,belt_clamp_clamp_height/2])
 		union()
 		{
-			cube([belt_clamp_hole_separation,belt_clamp_width,
+#			cube([belt_clamp_hole_separation,belt_clamp_width,
 				belt_clamp_clamp_height],center=true);
 			for(i=[-1,1])
 			translate([i*belt_clamp_hole_separation/2,0,0])
@@ -331,7 +331,7 @@ module belt_clamp(version)
 
 		if(version==1)
 		{
-			for(i=[-1:1])
+			for(i=[-3:3])
 			translate([-belt_width/2,-tooth_spacing/4+i*tooth_spacing,
 				belt_clamp_clamp_height-tooth_height])
 			cube([belt_width,tooth_spacing/2,tooth_height+1]);	

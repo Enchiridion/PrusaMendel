@@ -8,6 +8,7 @@
 // http://github.com/prusajr/PrusaMendel
 
 include <configuration.scad>
+include <gregs-lm8uu-holder.scad>
 use <teardrop.scad>
 corection = 1.17; 
 
@@ -55,7 +56,7 @@ nema17_width=1.7*25.4;
 thickness=9;
 nema17_support_d=nema17_width-nema17_hole_spacing;
 motor_mount_rotation=[0,0,0];
-motor_mount_translation=[44-thickness,8,23.5-4.7-12+24.5];
+motor_mount_translation=[25+lm8uu_holder_width/2+carriage_belt_spacing+belt_width+motor_belt_spacing-thickness,8,23.5-4.7-12+24.5];
 
 top_corner=motor_mount_translation+[thickness,nema17_width/2,nema17_width/2];
 bridge_length=top_corner[0]-9;
@@ -122,7 +123,7 @@ module positioned_motor_mount()
 				[-bridge_length,-nema17_support_d-bridge_shear*bridge_length,-2.5])
 				multmatrix([[1,0,0],[bridge_shear,1,0],[0,0,1]])
 				cube([bridge_length,nema17_support_d,6]);
-				#
+				
 				render()
 				translate(top_corner+[-thickness,-nema17_support_d,-nema17_support_d/2])
 				intersection()
@@ -135,7 +136,7 @@ module positioned_motor_mount()
 			}
 			
 			render()
-			intersection()
+#			intersection()
 			{
 				translate([0,-nema17_width/2+nema17_support_d/2,1])
 				rotate([0,90,0])
@@ -146,12 +147,13 @@ module positioned_motor_mount()
 					linear_extrude(height=thickness)
 					barbell(nema17_support_d/2,
 					nema17_support_d/2,20,60,nema17_hole_spacing);
-					translate([-20,-nema17_support_d/2,0])
-					cube([20,nema17_width,thickness]);
+
+					translate([-2*(15.8+1),-nema17_support_d/2,0])
+					cube([2*(15.8+1),nema17_width,thickness]);
 				}
 				
-				translate([0,0,-motor_mount_translation[2]+15.8/2])
-				cube([thickness*3,nema17_width,15.8],true);
+				translate([-(belt_width+motor_belt_spacing+carriage_belt_spacing+lm8uu_holder_width/2)/2+thickness+1,0,-motor_mount_translation[2]+15.8/2])
+				cube([1+belt_width+motor_belt_spacing+carriage_belt_spacing+lm8uu_holder_width/2,nema17_width,15.8],true);
 			}
 		}
 
@@ -216,7 +218,7 @@ module barbell (r1,r2,r3,r4,separation)
 	x2=[separation,0];
 	x3=triangulate (x1,x2,r1+r3,r2+r3);
 	x4=triangulate (x2,x1,r2+r4,r1+r4);
-	# render()
+	render()
 	difference ()
 	{
 		union()

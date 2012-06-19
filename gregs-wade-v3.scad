@@ -153,7 +153,7 @@ motor_mount_translation=[50.5,34,0];
 motor_mount_thickness=12;
 
 m8_clearance_hole=8.8;
-hole_for_608=22.3;
+hole_for_608=22.8;
 608_diameter=22;
 
 block_top_right=[wade_block_width,wade_block_height];
@@ -208,7 +208,7 @@ module bearing_washer()
 {
 	difference()
 	{
-		cylinder(r=hole_for_608/2-0.05,h=1);
+		cylinder(r=hole_for_608/2-0.15,h=1);
 		translate([0,0,-1])
 		cylinder(r=8,h=3);
 	}
@@ -861,10 +861,10 @@ module geeksbase_holes ()
 module malcolm_extrusion_holes () 
 {
 	extruder_recess_d=16;
-	extruder_recess_h=4; 
+	extruder_recess_h=10; 
 	hole_axis_rotation=22; 
 	hole_separation=33.2;
-	hole_slot_height=5;
+	hole_slot_height=4;
 	
 	// Recess in base
 	translate([0,0,-1])
@@ -877,7 +877,7 @@ module malcolm_extrusion_holes ()
 		translate([0,0,-1])
 		cylinder(r=m3_diameter/2,h=base_thickness+2,$fn=8);
 
-		translate([0,0,base_thickness-2])
+		translate([0,0,base_thickness/2])
 		rotate(-hole_axis_rotation+180)
 		{
 			cylinder(r=m3_nut_diameter/2,h=base_thickness/2+hole_slot_height,$fn=6);

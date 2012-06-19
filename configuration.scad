@@ -28,6 +28,23 @@ thin_wall = 3;
 linear = false;
 
 
+//Belt details. This will affect the X carriage and clamps and the X end motor.
+
+//T5:
+belt_width=6;
+belt_thickness=1.5; 
+tooth_height=1.5;
+tooth_spacing=5;
+
+////MXL:
+//belt_width=4;
+//belt_thickness=0.6; 
+//tooth_height=0.6;
+//tooth_spacing=0.08*25.4;
+
+carriage_belt_spacing=1;
+motor_belt_spacing=4;
+
 // CHANGE ONLY THE STUFF YOU KNOW
 // IT WILL REPLACE DEFAULT SETTING
 

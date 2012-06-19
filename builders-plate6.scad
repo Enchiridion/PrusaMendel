@@ -4,7 +4,7 @@ use <gregs-wadebits.scad>
 
 union ()
 {
-	wade(hotend_mount=256);
+	wade(hotend_mount=256+1024);
 
 	translate([-30,84,15.25])  // this is the translation for the 3mm version.
 //	translate([-30,84,13.92])  // this is the translation for the 1.75mm version.
@@ -12,8 +12,8 @@ union ()
 	rotate([0,-90,0])
 	wadeidler();
 
-	translate([28,90,0])
-	WadesL();
+//	translate([28,90,0])
+//	WadesL();
 	
 	translate([50,34,0])
 	bearing_washer();
