@@ -7,7 +7,7 @@ nutH = 3;
 corner_cut = 26;
 
 studding_dia = 8.0;
-shaft_dia = 6.2;
+shaft_dia = 6.5;
 
 module coupling()
 {
@@ -22,7 +22,7 @@ module coupling()
 			*cube(size = [2,40,30], center = true);
                 
 			//nut holes
-			translate([ holeX, -holeY, nutH/2 - 4.01]) cylinder(h = nutH, r=nutR, $fn=6, center=true);
+#			translate([ holeX, -holeY+1, nutH/2 - 4.01]) cylinder(h = nutH, r=nutR, $fn=6, center=true);
 			translate([-holeX,  holeY, nutH/2 - 4.01]) cylinder(h = nutH, r=nutR, $fn=6, center=true);
 			
 			//shaft groves
@@ -43,14 +43,14 @@ module coupling()
 
 
 			
-			translate([15-7,0,4.6])
+			translate([15-7,0,5])
 			difference()
 			{
 			translate([5,0,0])
 			cube([10,30,20],true);
 			translate([-1,0,0])
 			rotate([0,90,0])
-			cylinder(r=24.5/2,h=8);
+			cylinder(r=24/2,h=8);
 			}
 		}
 
@@ -62,8 +62,6 @@ module coupling()
 
 
 
-coupling();
-//translate([0,30])
 //coupling();
 
-//translate([0, -14, 0]) rotate([0,0,180]) coupling(c=1);
+for(i=[0:1])for(j=[0:1])translate([i*34, j*30, 0])coupling(c=1);
