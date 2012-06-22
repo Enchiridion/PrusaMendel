@@ -56,10 +56,5 @@ module coupling()
 	}
 }
 
-
-
-//coupling();
-
+coupling();
 //for(i=[0:1])for(j=[0:1])translate([i*34, j*30, 0])coupling(c=1);
-
-import ("placoupling_fixed.stl");
