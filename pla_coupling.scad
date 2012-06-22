@@ -22,8 +22,8 @@ module coupling()
 			*cube(size = [2,40,30], center = true);
                 
 			//nut holes
-#			translate([ holeX, -holeY+1, nutH/2 - 4.01]) cylinder(h = nutH, r=nutR, $fn=6, center=true);
-			translate([-holeX,  holeY, nutH/2 - 4.01]) cylinder(h = nutH, r=nutR, $fn=6, center=true);
+#			translate([ holeX, -holeY+1,- 4.01]) cylinder(h = nutH, r=nutR, $fn=6);
+			translate([-holeX,  holeY,- 4.01]) cylinder(h = nutH, r=nutR, $fn=6);
 			
 			//shaft groves
 			translate([ -16, 0, 4.5]) rotate([0,90,0]) cylinder(h = 16, r=studding_dia / 2, $fn=16);
@@ -31,8 +31,8 @@ module coupling()
 			
 			//screw holes
 			translate([ holeX,  holeY-1, -10]) cylinder(h = 20, r=holeR, $fn=16);
-			translate([ holeX, -holeY++1, -10]) cylinder(h = 20, r=holeR, $fn=16);
-			translate([-holeX,  holeY, -10]) cylinder(h = 20, r=holeR, $fn=16);
+			translate([ holeX, -holeY++1, -4+nutH+0.4]) cylinder(h = 20, r=holeR, $fn=16);
+			translate([-holeX,  holeY, -4+nutH+0.4]) cylinder(h = 20, r=holeR, $fn=16);
 			translate([-holeX, -holeY, -10]) cylinder(h = 20, r=holeR, $fn=16);
 			
 			//corners
@@ -53,10 +53,6 @@ module coupling()
 			cylinder(r=24/2,h=8);
 			}
 		}
-
-		//bridge
-		translate([ holeX, -holeY, nutH-3.9]) cylinder(h = 0.4, r=nutR+0.1, $fn=6, center=true);
-		translate([-holeX,  holeY, nutH-3.9]) cylinder(h = 0.4, r=nutR+0.1, $fn=6, center=true);
 	}
 }
 
@@ -64,4 +60,6 @@ module coupling()
 
 //coupling();
 
-for(i=[0:1])for(j=[0:1])translate([i*34, j*30, 0])coupling(c=1);
+//for(i=[0:1])for(j=[0:1])translate([i*34, j*30, 0])coupling(c=1);
+
+import ("placoupling_fixed.stl");
